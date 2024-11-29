@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Subir Modelo 3D</title>
+</head>
+<body>
+  <h1>Subir Modelo 3D</h1>
+  <input type="file" id="fileInput">
+  <button onclick="uploadFile()">Subir</button>
+  <img id="qrImage" src="" alt="Código QR" style="display:none;">
+  
+  <script>
+    async function uploadFile() {
+      const file = document.getElementById('fileInput').files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      
+      document.getElementById('qrImage').src = data.qrUrl;
+      document.getElementById('qrImage').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
